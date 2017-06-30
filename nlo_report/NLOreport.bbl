@@ -1,0 +1,61 @@
+\begin{thebibliography}{10}
+
+\bibitem{bloembergen}
+N.~Bloembergen.
+\newblock Nonlinear optics: past, present and future.
+\newblock In {\em Guided Wave Nonlinear Optics}, pages 1--9. Springer, 1992.
+
+\bibitem{boyd2003}
+R.~W. Boyd.
+\newblock {\em Nonlinear Optics}.
+\newblock Academic press, 2003.
+
+\bibitem{kuzyk2000physical}
+M.~G. Kuzyk.
+\newblock Physical limits on electronic nonlinear molecular susceptibilities.
+\newblock {\em Physical review letters}, 85(6):1218, 2000.
+
+\bibitem{kuzyk2005compact}
+M.~G. Kuzyk.
+\newblock Compact sum-over-states expression without dipolar terms for
+  calculating nonlinear susceptibilities.
+\newblock {\em Physical Review A}, 72(5):053819, 2005.
+
+\bibitem{orr1971perturbation}
+B.~J. Orr and J.~F. Ward.
+\newblock Perturbation theory of the non-linear optical polarization of an
+  isolated system.
+\newblock {\em Molecular Physics}, 20(3):513--526, 1971.
+
+\bibitem{chebfun}
+N.~Hale T.~A.~Driscoll and L.~N. Trefethen.
+\newblock {\em Chebfun Guide}.
+\newblock Pafnuty Publications.
+
+\bibitem{trefethen2000spectral}
+L.~N Trefethen.
+\newblock {\em Spectral Methods in MATLAB}, volume~10.
+\newblock Siam, 2000.
+
+\bibitem{trefethen2013approximation}
+L.~N. Trefethen.
+\newblock {\em Approximation Theory and Approximation Practice}.
+\newblock Siam, 2013.
+
+\bibitem{watkins2004fundamentals}
+D.~S. Watkins.
+\newblock {\em Fundamentals of Matrix Computations}, volume~64.
+\newblock John Wiley \& Sons, 2004.
+
+\bibitem{welfert1997generation}
+B.~D. Welfert.
+\newblock Generation of pseudospectral differentiation matrices i.
+\newblock {\em SIAM Journal on Numerical Analysis}, 34(4):1640--1657, 1997.
+
+\bibitem{zhou2007}
+J.~Zhou, U.~B. Szafruga, D.~S. Watkins, and M.~G. Kuzyk.
+\newblock Optimizing potential energy functions for maximal intrinsic
+  hyperpolarizability.
+\newblock {\em Physical Review A}, 76(5):053831, 2007.
+
+\end{thebibliography}

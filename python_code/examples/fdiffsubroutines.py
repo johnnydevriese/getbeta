@@ -1,0 +1,57 @@
+# this is a collection of subroutines for build discrete linear operators
+# using finite difference methods
+
+# import necessary packages
+import numpy as np
+import scipy as sp
+from scipy import sparse
+
+
+# discrete 1d laplacian with zero boundary conditions
+def lap1d0(N,h):
+
+	e = np.ones(N)
+
+	L = sparse.spdiags([-e,2*e,-e],[-1,0,1],N,N)/h/h
+	L = sparse.csc_matrix(L)
+
+	return L
+
+# discrete 1d laplacian with periodic boundary conditions
+def lap1dp(N,h):
+
+	e = np.ones(N)
+
+	L = sparse.spdiags([-e,-e,2*e,-e,-e],[-(N-1),-1,0,1,(N-1)],N,N)/h/h
+	L = sparse.csc_matrix(L)
+
+	return L
+
+# discrete 2d laplacian with zero boundary conditions
+def lap2d0(N,h):
+
+	A = lap1d0(N,h)
+	L = sparse.kron(A,sparse.eye(N,N)) + sparse.kron(sparse.eye(N,N),A)
+	L = sparse.csc_matrix(L)
+
+	return L
+
+# discrete 2d laplacian with periodic boundary conditions
+def lap2dp(N,h):
+
+	A = lap1dp(N,h)
+	L = sparse.kron(A,sparse.eye(N,N)) + sparse.kron(sparse.eye(N,N),A)
+	L = sparse.csc_matrix(L)
+
+	return L
+
+# discrete 1d x^2 operator
+def xsquared1d(L,N):
+
+	X = np.linspace(-L+1.0/(N+1),L-1.0/(N+1),N)
+	X = X**2
+	X = sparse.spdiags(X,0,N,N)
+	X = sparse.csc_matrix(X)
+
+	return X
+

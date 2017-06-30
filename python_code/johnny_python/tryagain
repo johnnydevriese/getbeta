@@ -1,0 +1,10 @@
+from pylab import *
+import csv
+with open('godfishes.csv', 'rb') as csvfile:
+     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+     for row in spamreader:
+         print ', '.join(row)
+x=arrange(1,564,1)
+y=spamreader 
+plot(x,y)
+show() 

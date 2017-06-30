@@ -1,0 +1,10 @@
+#include <omp.h>
+
+#ifndef myfortompsubs_h__included
+#define myfortompsubs_h__included
+extern "C" {void finit(int N, double scl, double *vec);}
+extern "C" {void fclenshaw(int N, double coeff, double *vecin, double alpha, double *temp2, double beta, double *vecout, double scl, double *temp1);}
+extern "C" {void fmultHamOp(int Dims, int Nx, int Ny, int Nz, double xmin, double xmax, double ymin, double ymax, double zmin, double zmax, double specrad, double *vecin, double *vecout);}
+#endif 
+
+

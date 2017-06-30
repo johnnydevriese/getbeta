@@ -1,0 +1,19 @@
+#include <HamOp.h>
+#include <ChebPoly.h>
+
+#ifndef ChebPolyOp_h__included
+#define ChebPolyOp_h__included
+class ChebPolyOp : public ChebPoly, public HamOp
+{
+
+	public:
+		// constructor
+		//ChebPolyOp(ChebPoly *P, HamOp *H) : ChebPoly(P),HamOp(H){}
+
+		// matrix vector multiplier
+		void multChebPolyOp(double *vecin, double *vecout);
+
+		// printer
+		void print() const;
+};
+#endif

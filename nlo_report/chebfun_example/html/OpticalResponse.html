@@ -1,0 +1,239 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>The nonlinear optical response of a simple molecule</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-09-29"><meta name="DC.source" content="OpticalResponse.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>The nonlinear optical response of a simple molecule</h1><!--introduction--><p>Jared L. Aurentz and John S. Minor, September 2014</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#3">Introduction</a></li><li><a href="#4">The quantum harmonic oscillator</a></li><li><a href="#8">References</a></li></ul></div><p>(Chebfun example) [Tags: ]</p><pre class="codeinput"><span class="keyword">function</span> OpticalResponse
+</pre><h2>Introduction<a name="3"></a></h2><p>The optical response of a material is the measure of how the molecular polarization <img src="OpticalResponse_eq86892.png" alt="$P$"> changes with respect to an applied electric field strength <img src="OpticalResponse_eq85525.png" alt="$E$">. In most cases <img src="OpticalResponse_eq86892.png" alt="$P$"> is analytic in <img src="OpticalResponse_eq85525.png" alt="$E$"> and can be written as a Taylor series.</p><p><img src="OpticalResponse_eq81835.png" alt="$$&#xA;P(E) = P_0 + \alpha E + \beta E^2 + \gamma E^3 + \cdots&#xA;$$"></p><p>Here <img src="OpticalResponse_eq84756.png" alt="$P_0$"> is the static polarization of the molecule which does not affect the optical response (the optical response only depends on the derivatives of <img src="OpticalResponse_eq86892.png" alt="$P$">). The nonlinear optical response is characterized by the coefficients corresponding to powers of <img src="OpticalResponse_eq85525.png" alt="$E$"> greater than <img src="OpticalResponse_eq80350.png" alt="$1$">. If the potential <img src="OpticalResponse_eq76839.png" alt="$V(x)$"> of a given molecule is known the polarization can be computed by constructing the Hamiltonian <img src="OpticalResponse_eq67619.png" alt="$H$"> and solving the Schroedinger eigenvalue problem.</p><p><img src="OpticalResponse_eq46692.png" alt="$$&#xA;H = -\frac12 \frac{\partial^2}{\partial x^2} + V(x)&#xA;$$"></p><p><img src="OpticalResponse_eq16917.png" alt="$$&#xA;H \psi(x) = \lambda \psi(x)&#xA;$$"></p><p>If the <img src="OpticalResponse_eq23351.png" alt="$\lambda$"> are countably many and can be ordered as <img src="OpticalResponse_eq90000.png" alt="$\lambda_1 < \lambda_2 \leq \lambda_3 \leq \ldots$"> then the polarization is computed by the formula,</p><p><img src="OpticalResponse_eq94121.png" alt="$$&#xA;P = \frac{\int x |\psi_1(x)|^2 dx}{\int |\psi_1(x)|^2 dx}&#xA;$$"></p><p>where <img src="OpticalResponse_eq86595.png" alt="$\psi_1(x)$"> is the first eigenfunction, also known as the ground state of the system. To add the contributions of the applied electric field strength <img src="OpticalResponse_eq85525.png" alt="$E$"> a linear term is added to the Hamiltonian.</p><p><img src="OpticalResponse_eq11237.png" alt="$$&#xA;H(E) = -\frac12 \frac{\partial^2}{\partial x^2} + V(x) + Ex&#xA;$$"></p><p>Solutions to Schroedinger's equation now depend on the parameter <img src="OpticalResponse_eq85525.png" alt="$E$">.</p><p><img src="OpticalResponse_eq10853.png" alt="$$&#xA;H(E) \psi(E,x) = \lambda(E) \psi(E,x)&#xA;$$"></p><p>If <img src="OpticalResponse_eq85525.png" alt="$E$"> is not too large then the polarization can still be computed as before.</p><p><img src="OpticalResponse_eq44073.png" alt="$$&#xA;P(E) = \frac{\int x |\psi_1(E,x)|^2 dx}{\int |\psi_1(E,x)|^2 dx}&#xA;$$"></p><p>From the Taylor series we see that the nonlinear optical response is characterized by higher order derivatives of <img src="OpticalResponse_eq86796.png" alt="$P(E)$"> at <img src="OpticalResponse_eq60580.png" alt="$E = 0$">, [1].</p><h2>The quantum harmonic oscillator<a name="4"></a></h2><p>One example of a simple molecule is a single electron bound by a quadratic potential <img src="OpticalResponse_eq23373.png" alt="$V(x) = 2x^2$">. The solutions of this system are the Hermite functions. These can be computed easily using Chebfun.</p><pre class="codeinput">L = 8;
+H = @(E) chebop(@(x,u) -.5*diff(u,2) + 2*x.^2.*u + E*x.*u,[-L,L],<span class="string">'dirichlet'</span>);
+[PSI,LAMBDA] = eigs(H(0),4,<span class="string">'sr'</span>);
+LW = <span class="string">'linewidth'</span>; FS = <span class="string">'fontsize'</span>;
+plot(PSI,LW,2);
+title(<span class="string">'Hermite Functions'</span>,FS,16);
+</pre><img vspace="5" hspace="5" src="OpticalResponse_01.png" alt=""> <p>For an alternative method for computing eigenfunctions of the Schroedinger equation checkout the command `quantumstates`.</p><p>To compute the polarization function <img src="OpticalResponse_eq86796.png" alt="$P(E)$"> is evaluated at a set of Chebyshev points and then interpolated with a polynomial</p><pre class="codeinput">Emax = .1;
+x = chebfun(<span class="string">'x'</span>,[-L,L]);
+
+<span class="keyword">function</span> pval = polarization(efield)
+    [psi,lambda]=eigs(H(efield),1,<span class="string">'sr'</span>);
+    pval = ((x.*psi)'*psi)/(psi'*psi);
+<span class="keyword">end</span>
+
+P = chebfun(@polarization,[-Emax,Emax],<span class="string">'vectorize'</span>,<span class="string">'eps'</span>,1e-10);
+plot(P,LW,2);
+title(<span class="string">'Polarization v. Electric Field'</span>,FS,16);
+xlabel(<span class="string">'Electric Field'</span>,FS,16);
+ylabel(<span class="string">'Polarization'</span>,FS,16);
+</pre><img vspace="5" hspace="5" src="OpticalResponse_02.png" alt=""> <p>Taking derivatives of <img src="OpticalResponse_eq86796.png" alt="$P(E)$"> at <img src="OpticalResponse_eq60580.png" alt="$E = 0$"> gives the various optical response coefficients.</p><pre class="codeinput">dP = diff(P);
+alpha = dP(0)
+
+d2P = diff(P,2);
+beta = d2P(0)/2
+
+d3P = diff(P,3);
+gamma = d3P(0)/6
+</pre><pre class="codeoutput">
+alpha =
+
+   -0.2500
+
+
+beta =
+
+  -6.5919e-08
+
+
+gamma =
+
+  -1.0643e-05
+
+</pre><h2>References<a name="8"></a></h2><p>[1] Juefei Zhou, Urszula B. Szafruga, David S. Watkins, and Mark G. Kuzyk, <i>Optimizing potential energy functions for maximal intrinsic hyperpolarizability</i>, Physical Reviews A, 76 (2007), 053831 pp. 1-10.</p><pre class="codeinput"><span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% The nonlinear optical response of a simple molecule
+%
+% Jared L. Aurentz and John S. Minor, September 2014
+
+%%
+% (Chebfun example)
+% [Tags: ]
+
+function OpticalResponse
+
+%% Introduction
+%
+% The optical response of a material is the measure of how the molecular 
+% polarization $P$ changes with respect to an applied electric field strength $E$.
+% In most cases $P$ is analytic in $E$ and can be written as a Taylor
+% series.
+%
+% $$
+% P(E) = P_0 + \alpha E + \beta E^2 + \gamma E^3 + \cdots
+% $$
+%
+% Here $P_0$ is the static polarization of the molecule which does not affect the optical response 
+% (the optical response only depends on the derivatives of $P$).
+% The nonlinear optical response is characterized by the coefficients 
+% corresponding to powers of $E$ greater than $1$. If the potential $V(x)$ of a 
+% given molecule is known the polarization can be computed by constructing 
+% the Hamiltonian $H$ and solving the Schroedinger eigenvalue problem. 
+%
+% $$
+% H = -\frac12 \frac{\partial^2}{\partial x^2} + V(x)
+% $$
+%
+% $$
+% H \psi(x) = \lambda \psi(x)
+% $$
+%
+% If the $\lambda$ are countably many and can be ordered as 
+% $\lambda_1 < \lambda_2 \leq \lambda_3 \leq \ldots$ then the polarization is 
+% computed by the formula,
+%
+% $$
+% P = \frac{\int x |\psi_1(x)|^2 dx}{\int |\psi_1(x)|^2 dx} 
+% $$
+%
+% where $\psi_1(x)$ is the first eigenfunction, also known as the ground state of the system. To add
+% the contributions of the applied electric field strength $E$ a linear term is
+% added to the Hamiltonian.
+%
+% $$
+% H(E) = -\frac12 \frac{\partial^2}{\partial x^2} + V(x) + Ex
+% $$
+%
+% Solutions to Schroedinger's equation now depend on the parameter $E$.
+%
+% $$
+% H(E) \psi(E,x) = \lambda(E) \psi(E,x)
+% $$
+% 
+% If $E$ is not too large then the polarization can still be computed as
+% before.
+%
+% $$
+% P(E) = \frac{\int x |\psi_1(E,x)|^2 dx}{\int |\psi_1(E,x)|^2 dx} 
+% $$
+%
+% From the Taylor series we see that the nonlinear optical response is
+% characterized by higher order derivatives of $P(E)$ at $E = 0$, [1]. 
+
+%% The quantum harmonic oscillator
+% One example of a simple molecule is a single
+% electron bound by a quadratic potential $V(x) = 2x^2$. The solutions of
+% this system are the Hermite functions. These can be computed easily using
+% Chebfun.
+
+L = 8;
+H = @(E) chebop(@(x,u) -.5*diff(u,2) + 2*x.^2.*u + E*x.*u,[-L,L],'dirichlet');
+[PSI,LAMBDA] = eigs(H(0),4,'sr');
+LW = 'linewidth'; FS = 'fontsize';
+plot(PSI,LW,2);
+title('Hermite Functions',FS,16);
+
+%%
+% For an alternative method for computing eigenfunctions of the
+% Schroedinger equation checkout the command `quantumstates`.
+
+%%
+% To compute the polarization function $P(E)$ is evaluated at a set of
+% Chebyshev points and then interpolated with a polynomial
+
+Emax = .1;
+x = chebfun('x',[-L,L]);
+
+function pval = polarization(efield)
+    [psi,lambda]=eigs(H(efield),1,'sr');
+    pval = ((x.*psi)'*psi)/(psi'*psi);
+end
+
+P = chebfun(@polarization,[-Emax,Emax],'vectorize','eps',1e-10);
+plot(P,LW,2);
+title('Polarization v. Electric Field',FS,16);
+xlabel('Electric Field',FS,16);
+ylabel('Polarization',FS,16);
+
+%%
+% Taking derivatives of $P(E)$ at $E = 0$ gives the various optical
+% response coefficients.
+
+dP = diff(P);
+alpha = dP(0)
+
+d2P = diff(P,2);
+beta = d2P(0)/2
+
+d3P = diff(P,3);
+gamma = d3P(0)/6
+
+%% References
+%
+% [1] Juefei Zhou, Urszula B. Szafruga, David S. Watkins, and Mark G. Kuzyk, 
+% _Optimizing potential energy functions for maximal intrinsic hyperpolarizability_, 
+% Physical Reviews A, 76 (2007), 053831 pp. 1-10.
+
+end
+
+##### SOURCE END #####
+--></body></html>
